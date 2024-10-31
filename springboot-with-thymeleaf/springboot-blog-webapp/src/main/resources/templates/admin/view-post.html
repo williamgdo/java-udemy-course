@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div th:replace="admin/header :: header">Header</div>
+<body>
+
+<div th:replace="admin/header :: navbar">Navbar</div>
+
+<br/> <br/>
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <h1 th:text="${post.title}">Title</h1>
+            <hr />
+            <h4 th:text="${post.shortDescription}">Short Description</h4>
+            <span><i>Written in <span th:text="${post.createdOn}">Date</span></i></span>
+            <br/><br/>
+            <div
+                class="border border-dark-subtle border-1 rounded-1 px-4 py-4 "
+                th:utext="${post.content}"
+            ></div>
+        </div>
+    </div>
+    <br/>
+</div>
+
+<div th:replace="admin/footer :: footer">Footer</div>
+
+</body>
+</html>
