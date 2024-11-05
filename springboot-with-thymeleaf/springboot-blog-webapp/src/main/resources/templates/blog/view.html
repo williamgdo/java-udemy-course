@@ -22,6 +22,22 @@
             <hr/>
             <div>
                 <h3>Comments: </h3>
+                <div th:each="comment, stats : ${post.comments}">
+                    <div class="card">
+                        <div class="card-header">
+                            <span><strong th:text="${comment.name}"></strong> - Posted on
+                                <span
+                                    th:text="${#temporals.format(comment.createdOn, 'dd MMM yyyy')}">
+                                </span>
+                            </span>
+                        </div>
+                        <div class="card-body">
+                            <p th:text="${comment.content}"></p>
+                        </div>
+                    </div>
+                    <br />
+                </div>
+
                 <div class="card">
                     <div class="card-header">
                         Leave a Comment
@@ -43,6 +59,13 @@
                                             placeholder="Enter name"
                                             th:field="*{name}"
                                     />
+                                    <p
+                                            th:if="${#fields.hasErrors('name')}"
+                                            th:errors="*{name}"
+                                            class="text-danger"
+                                    >
+                                        Error
+                                    </p>
                                 </div>
                             </div>
 
@@ -56,6 +79,13 @@
                                             placeholder="Enter email"
                                             th:field="*{email}"
                                     />
+                                    <p
+                                            th:if="${#fields.hasErrors('email')}"
+                                            th:errors="*{email}"
+                                            class="text-danger"
+                                    >
+                                        Error
+                                    </p>
                                 </div>
                             </div>
 
@@ -70,6 +100,13 @@
                                         th:field="*{content}"
                                 >
                                 </textarea>
+                                    <p
+                                            th:if="${#fields.hasErrors('content')}"
+                                            th:errors="*{content}"
+                                            class="text-danger"
+                                    >
+                                        Error
+                                    </p>
                                 </div>
                             </div>
 

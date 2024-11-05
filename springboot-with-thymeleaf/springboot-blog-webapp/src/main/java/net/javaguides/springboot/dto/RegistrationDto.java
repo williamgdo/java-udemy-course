@@ -3,28 +3,27 @@ package net.javaguides.springboot.dto;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import java.time.LocalDateTime;
-
-@Data
-@Builder
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class CommentDto {
+public class RegistrationDto {
     private Long id;
 
     @NotEmpty
-    private String name;
+    private String firstName;
 
-    @NotEmpty(message = "Email should not be empty")
+    @NotEmpty
+    private String lastName;
+
+    @NotEmpty
     @Email
     private String email;
 
     @NotEmpty
-    private String content;
-    private LocalDateTime createdOn;
-    private LocalDateTime updatedOn;
+    private String password;
 }

@@ -77,7 +77,7 @@ public class PostController {
     ) {
         if(result.hasErrors()) {
             model.addAttribute("post", postDto);
-            return "/admin/new-post";
+            return "/admin/posts/" + postId + "/edit";
         }
         postDto.setId(postId);
         postService.updatePost(postDto);
@@ -85,7 +85,7 @@ public class PostController {
     }
 
     @GetMapping("/admin/posts/{postId}/delete")
-    public String updatePost(
+    public String deletePost(
             @PathVariable("postId") Long postId
     ) {
         postService.deletePost(postId);
