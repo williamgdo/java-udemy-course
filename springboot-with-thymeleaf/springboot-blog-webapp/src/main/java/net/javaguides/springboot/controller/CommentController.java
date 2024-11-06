@@ -5,6 +5,8 @@ import net.javaguides.springboot.dto.CommentDto;
 import net.javaguides.springboot.dto.PostDto;
 import net.javaguides.springboot.service.CommentService;
 import net.javaguides.springboot.service.PostService;
+import net.javaguides.springboot.util.ROLE;
+import net.javaguides.springboot.util.SecurityUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -23,7 +25,7 @@ public class CommentController {
         this.postService = postService;
     }
 
-    @PostMapping("/{postUrl}/comments")
+    @PostMapping("/blog/post/{postUrl}/new-comment")
     public String createComment (
         @PathVariable("postUrl") String postUrl,
         @Valid @ModelAttribute("comment") CommentDto comment,
@@ -38,14 +40,20 @@ public class CommentController {
             return "blog/view";
         }
         commentService.createComment(postUrl, comment);
-        return "redirect:/post/" + postUrl;
+        return "redirect:/blog/post/" + postUrl;
     }
 
     @GetMapping("/admin/comments")
     public String getComments(
             Model model
     ) {
-        List<CommentDto> comments = commentService.findAllComments();
+        String role = SecurityUtils.getRole();
+        List<CommentDto> comments = null;
+
+        if (ROLE.ROLE_ADMIN.name().equals(role))
+            comments = commentService.findAllComments();
+        else
+            comments = commentService.findCommentByPost();
         model.addAttribute("comments", comments);
         return "admin/comments";
     }

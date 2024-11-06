@@ -19,14 +19,14 @@ public class BlogController {
         this.postService = postService;
     }
 
-    @GetMapping("/")
+    @GetMapping("/blog")
     public String viewBlogPosts(Model model) {
         List<PostDto> posts = postService.findAllPosts();
         model.addAttribute("posts", posts);
         return "blog/posts";
     }
 
-    @GetMapping("/search")
+    @GetMapping("/blog/search")
     public String searchBlogPosts(
             @RequestParam(value = "query") String query,
             Model model
@@ -36,7 +36,7 @@ public class BlogController {
         return "blog/posts";
     }
 
-    @GetMapping("/post/{postUrl}")
+    @GetMapping("/blog/post/{postUrl}")
     public String showPost(
             @PathVariable("postUrl") String postUrl,
             Model model

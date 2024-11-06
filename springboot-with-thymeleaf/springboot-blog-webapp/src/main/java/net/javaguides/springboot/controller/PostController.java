@@ -3,6 +3,8 @@ package net.javaguides.springboot.controller;
 import jakarta.validation.Valid;
 import net.javaguides.springboot.dto.PostDto;
 import net.javaguides.springboot.service.PostService;
+import net.javaguides.springboot.util.ROLE;
+import net.javaguides.springboot.util.SecurityUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -21,7 +23,14 @@ public class PostController {
     // create handler method, GET request and return model and view
     @GetMapping("/admin/posts")
     public String getPosts(Model model) {
-        List<PostDto> posts = postService.findAllPosts();
+        String role = SecurityUtils.getRole();
+
+        List<PostDto> posts = null;
+        if (ROLE.ROLE_ADMIN.name().equals(role))
+            posts = postService.findAllPosts();
+        else
+            posts = postService.findPostsByUser();
+
         model.addAttribute("posts", posts);
         return "/admin/posts";
     }
